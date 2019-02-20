@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const getCover = require('../../poshett-musicbrainz');
+import getCover from 'poshett-musicbrainz';
 import PoshettWeb from "@fnu/poshett-web";
 import Mpd from "mpd";
 
@@ -67,6 +67,5 @@ function querySong() {
 }
 
 if (require.main === module) {
-
-	// getCover();
+	// PoshettMusicBrainz.getCover();
 }
