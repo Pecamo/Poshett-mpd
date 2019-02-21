@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MPD interface for Poshett",
   "main": "index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "watch": "tsc -p tsconfig.json -w",
     "build": "tsc -p tsconfig.json",

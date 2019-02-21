@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import getCover from 'poshett-musicbrainz';
+import { getCover } from 'poshett-musicbrainz';
 import PoshettWeb from "@fnu/poshett-web";
 import Mpd from "mpd";
 
@@ -49,11 +49,9 @@ function querySong() {
 				throw err;
 			}
 	
-			if (err) throw err
-			// console.log(msgStr)
+			if (err) throw err;
 			let song = Mpd.parseKeyValueMessage(msg);
 			console.log(song);
-			console.log(getCover)
 			getCover(song.Title, song.Artist)
 			.then(img => {
 				console.log(img.image);
