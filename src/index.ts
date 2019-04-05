@@ -1,15 +1,45 @@
 #!/usr/bin/env node
 
-import { getCover } from 'poshett-musicbrainz';
-import PoshettWeb from "@fnu/poshett-web";
+import { getCover } from 'poshett-file';
 import Mpd from "mpd";
 
 // TODO Also use `albumart` command (https://www.musicpd.org/doc/html/protocol.html#the-music-database)
 
-const poshett = new PoshettWeb();
+export type CAImage = {
+	edit: 37284546,
+	id: 12750224075,
+	image: string;
 
-poshett.initServer();
-poshett.startServer();
+	thumbnails: {
+		250: string;
+		500: string;
+		1200: string;
+		small: string;
+		large: string;
+	},
+
+	comment: string;
+	approved: boolean;
+	front:false;
+	types: CAType[];
+	back: boolean;
+}
+
+export type CAType =
+	'Front' |
+	'Back' |
+	'Booklet' |
+	'Medium' |
+	'Tray' |
+	'Obi' |
+	'Spine' |
+	'Track' |
+	'Liner' |
+	'Sticker' |
+	'Poster' |
+	'Watermark' |
+	'Raw/Unedited' |
+	'Other';
 
 const mpd = Mpd.connect({
 	host: "mpd.fixme.ch",
@@ -48,12 +78,14 @@ function querySong() {
 			if (err) {
 				throw err;
 			}
-	
+
 			if (err) throw err;
 			let song = Mpd.parseKeyValueMessage(msg);
 			console.log(song);
-			getCover(song.Title, song.Artist)
-			.then(img => {
+			console.log(song.file);
+
+			getCover(song.file)
+			.then((img: CAImage) => {
 				console.log(img.image);
 				poshett.setCurrentMusic({ imgUrl: img.image });
 			})
